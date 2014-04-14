@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Clockr</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!-- Add your site or application content here -->
+            <div class="clock-container">
+                <div class="clock">
+                    <div class="container container-hours">
+                        <div class="outer">
+                            <div class="inner"></div>
+                        </div>
+                        <div class="circle"></div>
+                    </div>
+                    <div class="container container-minutes">
+                        <div class="outer">
+                            <div class="inner"></div>
+                        </div>
+                        <div class="circle"></div>
+                    </div>
+                    <div class="container container-seconds">
+                        <div class="outer">
+                            <div class="inner"></div>
+                        </div>
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+             
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+        var hours;
+        var minutes;
+        var seconds;
+        var percentageHour;
+        var percentageMinute;
+        var percentageSecond;
+        var timeOfDay;
+        function getTime() {
+            hours = moment().format('h');
+            minutes = moment().format('mm');
+            seconds = moment().format('ss');
+            $(".container-hours .circle").text(hours);
+            $(".container-minutes .circle").text(minutes);
+            $(".container-seconds .circle").text(seconds);
+
+
+        }
+        function updateTime() {
+            var hoursInDay = 24;
+            var minutesInHour = 60;
+            var secondsInMinute = 60;
+            percentageHour = hours/hoursInDay * 360;
+            percentageMinute = minutes/minutesInHour * 360;
+            percentageSecond = seconds/secondsInMinute * 360;
+            var percentageHoursRemaining = percentageHour - 360;
+            var percentageMinutesRemaining = percentageMinute - 360;
+            var percentageSecondsRemaining = percentageSecond - 360;
+            $(".ratio").text(percentageSecond);
+            $(".container-hours .inner").css({'-webkit-transform': 'rotate(' + percentageHour + 'deg)'});
+            $(".container-hours .outer").css({'-webkit-transform': 'rotate(' + percentageHoursRemaining + 'deg)'});
+            $(".container-minutes .outer").css({'-webkit-transform': 'rotate(' + percentageMinute + 'deg)'});
+            $(".container-minutes .inner").css({'-webkit-transform': 'rotate(' + percentageMinutesRemaining + 'deg)'});
+            $(".container-seconds .outer").css({'-webkit-transform': 'rotate(' + percentageSecond + 'deg)'});
+            $(".container-seconds .inner").css({'-webkit-transform': 'rotate(' + percentageSecondsRemaining + 'deg)'});
+
+        }
+        setInterval(
+            function(){
+               getTime(); 
+               updateTime();
+            },1000);
+        </script>
+    </body>
+</html>
